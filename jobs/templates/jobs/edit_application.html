@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Application | JobTrack</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6fb;
+            margin: 0;
+            padding: 30px 15px;
+            color: #222;
+        }
+
+        .container {
+            max-width: 550px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            color: #243b64;
+            margin-top: 0;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccd2dd;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        button, .back-link {
+            display: inline-block;
+            margin-top: 22px;
+            padding: 12px 18px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        button {
+            background: #3157c8;
+            color: white;
+        }
+
+        .back-link {
+            background: #e9edf5;
+            color: #243b64;
+            margin-left: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Edit Application</h1>
+        <p>Update your job application details below.</p>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label for="company_name">Company Name</label>
+            <input
+                type="text"
+                id="company_name"
+                name="company_name"
+                value="{{ job.company_name }}"
+                required
+            >
+
+            <label for="job_role">Job Role</label>
+            <input
+                type="text"
+                id="job_role"
+                name="job_role"
+                value="{{ job.job_role }}"
+                required
+            >
+
+            <label for="application_date">Application Date</label>
+            <input
+                type="date"
+                id="application_date"
+                name="application_date"
+                value="{{ job.application_date|date:'Y-m-d' }}"
+                required
+            >
+
+            <label for="status">Application Status</label>
+            <select id="status" name="status" required>
+                <option value="Applied" {% if job.status == "Applied" %}selected{% endif %}>Applied</option>
+                <option value="Interview" {% if job.status == "Interview" %}selected{% endif %}>Interview</option>
+                <option value="Selected" {% if job.status == "Selected" %}selected{% endif %}>Selected</option>
+                <option value="Rejected" {% if job.status == "Rejected" %}selected{% endif %}>Rejected</option>
+            </select>
+
+            <button type="submit">Save Changes</button>
+            <a href="/" class="back-link">Cancel</a>
+        </form>
+    </div>
+</body>
+</html>
