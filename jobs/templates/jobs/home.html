@@ -309,6 +309,40 @@
             color: var(--muted);
             text-align: center;
         }
+        
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin: 28px 0;
+}
+
+.page-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 18px;
+    background: #4f46e5;
+    color: white;
+    border-radius: 9px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 650;
+    transition: background 0.2s ease;
+}
+
+.page-btn:hover {
+    background: #3730a3;
+}
+
+.page-info {
+    color: #64748b;
+    font-size: 14px;
+    font-weight: 600;
+}
+
 
         footer {
             text-align: center;
@@ -522,6 +556,29 @@
                 No applications found. Try another search or click Reset.
             </div>
         {% endfor %}
+        
+{% if jobs.paginator.num_pages > 1 %}
+    <div class="pagination">
+        {% if jobs.has_previous %}
+            <a href="?page={{ jobs.previous_page_number }}&search={{ search_query|urlencode }}&status={{ selected_status|urlencode }}"
+               class="page-btn">
+                &laquo; Previous
+            </a>
+        {% endif %}
+
+        <span class="page-info">
+            Page {{ jobs.number }} of {{ jobs.paginator.num_pages }}
+        </span>
+
+        {% if jobs.has_next %}
+            <a href="?page={{ jobs.next_page_number }}&search={{ search_query|urlencode }}&status={{ selected_status|urlencode }}"
+               class="page-btn">
+                Next &raquo;
+            </a>
+        {% endif %}
+    </div>
+{% endif %}
+
     </main>
 
     <footer>
